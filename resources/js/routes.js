@@ -56,6 +56,15 @@ const routes = [
         }
     },
     {
+        path: '/profile',
+        name: 'profile',
+        component: () => import('./pages/Profile.vue'),
+        meta: {
+            requireAuth: true,
+            layout: AdminLayout
+        }
+    },
+    {
         path: '/:pathMatch(.*)*',
         // path: "/:catchAll(.*)", 
         name:'notfound',

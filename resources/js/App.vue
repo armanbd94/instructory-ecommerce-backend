@@ -13,8 +13,7 @@ export default {
     },
     data(){
         return {
-          isAuthenticate:false,
-          token:''
+
         }
     },
 
