@@ -1,28 +1,32 @@
 class AppStorage {
-
-    storeToken(token) {
-        localStorage.setItem('token', token);
+    storeToken(token){
+        localStorage.setItem('token',token);
     }
 
-    storeUser(user) {
-        localStorage.setItem('user', JSON.stringify(user));
+    storeUser(user)
+    {
+        localStorage.setItem('user',JSON.stringify(user));
     }
 
-    store(token, user) {
-        this.storeToken(token)
-        this.storeUser(user)
+    store(token,user)
+    {
+        this.storeToken(token);
+        this.storeUser(user);
     }
 
-    clear() {
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
+    clear()
+    {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
     }
 
-    getToken() {
+    getToken()
+    {
         return localStorage.getItem('token');
     }
 
-    getUser() {
+    getUser()
+    {
         return localStorage.getItem('user');
     }
 }

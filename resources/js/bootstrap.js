@@ -5,10 +5,10 @@ window._ = require('lodash');
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
- window.Noty = require('noty');
+
 window.axios = require('axios');
-axios.defaults.baseURL = 'http://ecommerce-backend-test.test/api/v1/backend';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+axios.defaults.baseURL = 'http://ecommerce-backend.test/api/v1/backend/';
+axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem('token');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

@@ -12,6 +12,7 @@ Route::prefix('v1')->group(function(){
         
         Route::prefix('backend')->group(function(){
             Route::get('profile',[\App\Http\Controllers\API\V1\Backend\AuthController::class,'profile']);
+            Route::post('change-password',[\App\Http\Controllers\API\V1\Backend\AuthController::class,'change_password']);
         });
 
         Route::prefix('frontend')->group(function(){

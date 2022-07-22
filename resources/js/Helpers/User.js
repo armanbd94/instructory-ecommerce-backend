@@ -1,23 +1,26 @@
-import Token from './Token'
-import AppStorage from './AppStorage'
+import AppStorage from "./AppStorage";
+import Token from "./Token";
 
-
-class User {
-
-    responseAfterLogin(res) {
-        const access_token = res.token;
+class User{
+    responseAfterLogin(res)
+    {
+        const accessToken = res.token;
         const user = res.user;
-        if (Token.isValid(access_token)) {
-            AppStorage.store(access_token, user)
+        if(Token.isValid(accessToken))
+        {
+            AppStorage.store(accessToken,user);
         }
     }
 
-    userInfo()
-    {
+    userInfo(){
         let user = AppStorage.getUser();
         return JSON.parse(user);
     }
-
+    
+    logout()
+    {
+        AppStorage.clear();
+    }
 }
 
-export default User = new User()
+export default User = new User();
