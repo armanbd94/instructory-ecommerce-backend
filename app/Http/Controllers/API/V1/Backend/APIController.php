@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\API\V1\Backend;
 
-use App\Http\Controllers\Controller;
+use stdClass;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class APIController extends Controller
 {
-    public function sendSuccessResponse($data,$message)
+    public function sendSuccessResponse($data=[],$message="")
     {
         $response = new stdClass;
         $response->status = true;
@@ -16,7 +17,7 @@ class APIController extends Controller
         return response()->json($response);
     }
 
-    public function sendErrorResponse($errors,$message)
+    public function sendErrorResponse($errors=[],$message="")
     {
         $response = new stdClass;
         $response->status = false;
