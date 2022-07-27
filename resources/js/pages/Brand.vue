@@ -6,15 +6,27 @@
           <div class="card-header">
             <h4 class="card-title">Brands</h4>
             <div class="card-tools" style="position: absolute;right: 1rem;top: .5rem;">
-              <button type="button" class="btn btn-info mr-3" @click="addItem">
+              <button type="button" class="btn btn-primary mr-3" @click="addItem">
                 <i class="fas fa-plus"></i>
               </button>
-              <button type="button" class="btn btn-primary" @click="reload">
-                <i class="fas fa-sync"></i>
-              </button>
+              
             </div>
           </div>
-
+          <div class="card-header col-nd-12">
+            <div class="row">
+              <div class="form-group col-md-4">
+                    <input type="text" v-model="query.name" id="name" class="form-control" placeholder="Search Brand Name">
+              </div>
+              <div class="form-group col-md-8 text-right">
+                  <button type="button" class="btn btn-info mr-2" @click="searchData">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <button type="button" class="btn btn-warning" @click="reload">
+                    <i class="fas fa-sync"></i>
+                  </button>
+              </div>
+            </div>
+          </div>
           <div class="card-body">
             <!--  Search Field  -->
 
@@ -40,7 +52,7 @@
                     <td class="text-center">{{ brand.created_at }}</td>
                     <td class="text-center">
                       <button type="button" class="btn btn-primary btn-sm mr-2" @click="editItem(brand)"><i class="fa fa-edit"></i></button>
-                      <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
+                      <button type="button" class="btn btn-danger btn-sm" @click="deleteItem(brand)"><i class="fa fa-trash-alt"></i></button>
                     </td>
                   </tr>
                 </tbody>
@@ -76,7 +88,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal"  @click="modalShow=false">Close</button>
-              <button type="button" class="btn btn-primary" @click="editMode === true ? update() : save()">{{ editMode === true ? 'Edit' : 'Save' }}</button>
+              <button type="button" class="btn btn-primary" @click="editMode === true ? update() : save()">{{ editMode === true ? 'Update' : 'Save' }}</button>
             </div>
           </div>
         </div>
@@ -99,10 +111,10 @@ export default {
         editMode:false,
         modalShow:false,
         tableData:[],
-        query:'',
-        form:{
-          name:'',
+        query:{
+          name:''
         },
+        form:{},
         pagination: {
           current_page: 1
         },
@@ -128,24 +140,43 @@ export default {
         });
       },
       searchData(){
-
+        const query = $.param(this.query);
+        axios
+        .get("brands?page=" + this.pagination.current_page+"&"+query)
+        .then(res => {
+          console.log(res);
+            this.tableData = res.data.data;
+            this.pagination = res.data.meta;
+          
+        })
+        .catch(e => {
+          console.log(e);
+        });
       },
       reload(){
-
+        this.query.name = '';
+        this.getData();
       },
       addItem()
       {
         this.modalTitle = "Add New Brand";
         this.modalShow = true;
-        this. errors={};
+        this.form = {
+          name:'',
+        };
+        this.errors={};
       },
       editItem(item)
       {
+          this.errors={};
           this.editMode = true;
-          this.form = item;
+          this.form = {
+            id:item.id,
+            name:item.name,
+          };
           this.modalTitle = `Edit ${item.name} Data`;
           this.modalShow = true;
-          this. errors={};
+          
       },
       save()
       {
@@ -168,20 +199,55 @@ export default {
       },
       update()
       {
-          
+          axios
+        .put("brands/"+this.form.id,this.form)
+        .then(res => {
+            Toast.fire({
+                        icon: res.data.status === true ? 'success' : 'error',
+                        title:res.data.message
+                    });
+            if(res.data.status === true)
+            {
+              this.getData();
+              this.modalShow = false;
+            }
+        })
+        .catch(error => {
+          this.errors = error.response.data.errors;
+        });
       },
-      deleteConfirm(item)
+      deleteItem(item)
       {
-
+        new Swal({
+          title: `Are you sure to delete ${item.name} data?`,
+          text:"You won't be able to revert this!",
+          showCancelButton:true,
+          confirmButtonColor:'#6777ef',
+          cancelButtonColor:'#d33',
+          confirmButtonText:'Yes, delete it!'
+        }).then((result) => {
+          if(result.value){
+            axios
+            .delete("brands/"+item.id)
+            .then(res => {
+                Toast.fire({
+                            icon: res.data.status === true ? 'success' : 'error',
+                            title:res.data.message
+                        });
+                if(res.data.status === true)
+                {
+                  this.getData();
+                  this.modalShow = false;
+                }
+            })
+            .catch(error => {
+              this.errors = error.response.data.errors;
+            });
+          }
+        });
       },
-      destroy(id)
-      {
-
-      }
 
     }
-    
-    
 }
 </script>
 
