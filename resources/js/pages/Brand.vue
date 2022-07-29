@@ -124,7 +124,9 @@ export default {
     created() {
       this.getData();
     },
+
     methods: {
+
       getData()
       {
         axios
@@ -163,6 +165,7 @@ export default {
         this.modalShow = true;
         this.form = {
           name:'',
+          slug:''
         };
         this.errors={};
       },

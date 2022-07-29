@@ -122,7 +122,8 @@ __webpack_require__.r(__webpack_exports__);
       this.modalTitle = "Add New Brand";
       this.modalShow = true;
       this.form = {
-        name: ''
+        name: '',
+        slug: ''
       };
       this.errors = {};
     },
