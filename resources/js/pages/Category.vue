@@ -210,6 +210,7 @@ export default {
       {
         this.modalTitle = "Add New Category";
         this.modalShow = true;
+        this.editMode = false;
         this.form = {
           name:'',
           slug:'',

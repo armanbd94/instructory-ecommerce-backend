@@ -47,7 +47,7 @@ class CategoryController extends APIController
                 'name' => $request->name,
                 'slug' => $request->slug,
                 'parent_id' => $request->parent_id,
-                'created_by' => auth('api')->user()->id
+                'updated_by' => auth('api')->user()->id
             ]);
             if($category)
             {

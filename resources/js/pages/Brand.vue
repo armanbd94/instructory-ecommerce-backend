@@ -163,6 +163,7 @@ export default {
       {
         this.modalTitle = "Add New Brand";
         this.modalShow = true;
+        this.editMode = false;
         this.form = {
           name:'',
           slug:''

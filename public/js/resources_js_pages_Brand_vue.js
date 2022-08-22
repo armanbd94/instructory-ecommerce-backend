@@ -121,6 +121,7 @@ __webpack_require__.r(__webpack_exports__);
     addItem: function addItem() {
       this.modalTitle = "Add New Brand";
       this.modalShow = true;
+      this.editMode = false;
       this.form = {
         name: '',
         slug: ''

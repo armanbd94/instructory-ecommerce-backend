@@ -41,7 +41,7 @@ class BrandController extends APIController
         try {
             $brand = $brand->update([
                 'name' => $request->name,
-                'created_by' => auth('api')->user()->id
+                'updated_by' => auth('api')->user()->id
             ]);
             if($brand)
             {
